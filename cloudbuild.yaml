@@ -5,9 +5,8 @@ steps:
   args: ['install']
 - id: build
   name: 'node'
-  args:
-  - 'run'
-  - 'build'
+  entrypoint: npm
+  args: ['run', 'build']
   waitFor:
   - install
 - id: copy_files
