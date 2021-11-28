@@ -9,14 +9,12 @@ steps:
   args: ['run', 'build']
   waitFor:
   - install
-- id: copy_files
+- id: deploy
   name: 'gcr.io/cloud-builders/gsutil'
   args: ['-m','rsync','-r','-d', './dist/site404-js', '${_SERVER_BUCKET_PATH}']
   waitFor:
   - build
-- id: set_website_configuration
-  name: 'gcr.io/cloud-builders/gsutil'
-  args: ['web', 'set', '-m', 'index.html','${_SERVER_BUCKET_PATH}']
-  waitFor:
-  - copy_files
-
+- id: invalidate_cache
+  name: 'gcr.io/cloud-builders/gcloud'
+  args: ['compute','url-maps','invalidate-cdn-cache', '${_LOAD_BALANCER_NAME}', '--path=/*']
+  waitFor: deploy
