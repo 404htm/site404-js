@@ -1,27 +1,23 @@
 steps:
-- id: install_packages
+- id: install_node_packages
   name: 'gcr.io/cloud-builders/npm'
   args:
   - 'install'
-- id: prerender_browser_files
+- id: ng_build
   name: 'gcr.io/cloud-builders/npm'
   args:
   - 'run'
-  - 'build:prerender'
+  - 'build'
   waitFor:
-  - install_packages
-- id: copy_prerendered_files
+  - install_node_packages
+- id: copy_files
   name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp','-r','dist/browser/*', '\${_SERVER_BUCKET_PATH}']
+  args: ['cp','-r','-m', 'dist/site404-js/*', '\${_SERVER_BUCKET_PATH}']
   waitFor:
-  - prerender_browser_files
+  - ng_build
 - id: set_website_configuration
   name: 'gcr.io/cloud-builders/gsutil'
   args: ['web', 'set', '-m', 'index.html','\${_SERVER_BUCKET_PATH}']
   waitFor:
-  - copy_prerendered_files
-- id: set_permissions_for_website_files
-  name: 'gcr.io/cloud-builders/gsutil'
-  args: ['acl','ch','-u','AllUsers:R','-r', '\${_SERVER_BUCKET_PATH}']
-  waitFor:
-  - copy_prerendered_files
+  - copy_files
+
