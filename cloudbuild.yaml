@@ -1,20 +1,19 @@
 steps:
-- id: install_node_packages
-  name: 'gcr.io/cloud-builders/npm'
-  args:
-  - 'install'
-- id: ng_build
-  name: 'gcr.io/cloud-builders/npm'
+- name: install
+  entrypoint: npm
+  args: ['install']
+- id: build
+  name: 'node'
   args:
   - 'run'
   - 'build'
   waitFor:
-  - install_node_packages
+  - install
 - id: copy_files
   name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp','-r','-m', 'dist/site404-js/*', '\${_SERVER_BUCKET_PATH}']
   waitFor:
-  - ng_build
+  - build
 - id: set_website_configuration
   name: 'gcr.io/cloud-builders/gsutil'
   args: ['web', 'set', '-m', 'index.html','\${_SERVER_BUCKET_PATH}']
