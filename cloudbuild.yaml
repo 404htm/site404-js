@@ -11,7 +11,7 @@ steps:
   - install
 - id: copy_files
   name: 'gcr.io/cloud-builders/gsutil'
-  args: ['rsync','-r','-d', 'dist/site404-js/*', '\${_SERVER_BUCKET_PATH}']
+  args: ['-m','rsync','-r','-d', './dist/site404-js/*', '\${_SERVER_BUCKET_PATH}']
   waitFor:
   - build
 - id: set_website_configuration
