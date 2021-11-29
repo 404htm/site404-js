@@ -11,12 +11,13 @@ steps:
   - install_dependencies
 - id: install_firefox
   name: node:17-alpine3.12
-  args: ['apk', 'add', 'firefox']
+  entrypoint: apk
+  args: ['add', 'firefox']
 - id: test
   name: node:17-alpine3.12
   entrypoint: npm
   args: ['test']
-  waitFor: ['build']
+  waitFor: ['build', 'install_firefox']
 - id: deploy
   name: 'gcr.io/cloud-builders/gsutil'
   args: ['-m','rsync','-r','-d', './dist/site404-js', '${_SERVER_BUCKET_PATH}']
