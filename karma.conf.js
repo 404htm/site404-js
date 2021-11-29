@@ -40,12 +40,6 @@ module.exports = function (config) {
     browsers: ['Chrome'],
     singleRun: false,
     restartOnFileChange: true,
-    browsers : ['ChromeHeadlessCustom'],
-    customLaunchers: {
-      ChromeHeadlessCustom: {
-        base: 'ChromeHeadless',
-        flags: ['--no-sandbox', '--disable-setuid-sandbox']
-      }
-    },
+    browsers : ['Chrome','ChromeHeadless']
   });
 };
