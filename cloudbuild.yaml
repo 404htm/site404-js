@@ -1,10 +1,10 @@
 steps:
 - id: install
-  name: node
+  name: node:17-alpine3.12
   entrypoint: npm
   args: ['install']
 - id: build
-  name: 'node'
+  name: node:17-alpine3.12
   entrypoint: npm
   args: ['run', 'build']
   waitFor:
