@@ -1,10 +1,10 @@
 steps:
 - id: install_dependencies
-  name: us-east4-docker.pkg.dev/htm-332202/shared-404-repo/node-build:latest
+  name: us-east4-docker.pkg.dev/htm-332202/shared-404-repo/node-build:current
   entrypoint: npm
   args: ['install']
 - id: build
-  name: us-east4-docker.pkg.dev/htm-332202/shared-404-repo/node-build:latest
+  name: us-east4-docker.pkg.dev/htm-332202/shared-404-repo/node-build:current
   entrypoint: npm
   args: ['run', 'build']
   waitFor: [install_dependencies]
