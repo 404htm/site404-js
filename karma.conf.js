@@ -2,14 +2,13 @@
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
 module.exports = function (config) {
-  process.env.CHROME_BIN = '/usr/bin/chromium-browser'
 
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
-      require('karma-chrome-launcher'),
+      require('karma-firefox-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma')
@@ -42,11 +41,6 @@ module.exports = function (config) {
     browsers: ['Chrome'],
     singleRun: false,
     restartOnFileChange: true,
-    browsers : ['Chrome','Chromium', 'ChromeHeadless', 'ChromiumHeadless'],
-    customLaunchers: {
-      HeadlessChrome:{
-        base: 'ChromeHeadless',
-        flags: ['--no-sandbox']
-      }}
+    browsers : ['FirefoxHeadless', "Chrome"],
   });
 };

@@ -1,13 +1,17 @@
 steps:
 - id: install_dependencies
-  name: us-east4-docker.pkg.dev/htm-332202/shared-404-repo/node-build:current
+  name: node:17-alpine3.12
   entrypoint: npm
   args: ['install']
 - id: build
-  name: us-east4-docker.pkg.dev/htm-332202/shared-404-repo/node-build:current
+  name: node:17-alpine3.12
   entrypoint: npm
   args: ['run', 'build']
-  waitFor: [install_dependencies]
+  waitFor:
+  - install_dependencies
+- id: install_firefox
+  name: node:17-alpine3.12
+  args: ['apk', 'add', 'firefox']
 - id: test
   name: node:17-alpine3.12
   entrypoint: npm
@@ -16,8 +20,8 @@ steps:
 - id: deploy
   name: 'gcr.io/cloud-builders/gsutil'
   args: ['-m','rsync','-r','-d', './dist/site404-js', '${_SERVER_BUCKET_PATH}']
-  waitFor: ['test']
+  waitFor: ['build']
 - id: invalidate_cache
   name: 'gcr.io/cloud-builders/gcloud'
   args: ['compute','url-maps','invalidate-cdn-cache', '${_LOAD_BALANCER_NAME}', '--path=/*']
-  waitFor: [deploy]
+  waitFor: [deploy] deploy
