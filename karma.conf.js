@@ -42,9 +42,9 @@ module.exports = function (config) {
     browsers: ['Chrome'],
     singleRun: false,
     restartOnFileChange: true,
-    browsers : ['Chrome','ChromeHeadless'],
+    browsers : ['Chrome','Chromium', 'ChromeHeadless', 'ChromiumHeadless'],
     customLaunchers: {
-      ChromeHeadlessCI: {
+      HeadlessChrome:{
         base: 'ChromeHeadless',
         flags: ['--no-sandbox']
       }}
