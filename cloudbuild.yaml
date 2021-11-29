@@ -8,11 +8,15 @@ steps:
   entrypoint: npm
   args: ['run', 'build']
   waitFor: [install_dependencies]
+- id: install_puppeteer
+  name: node:17-alpine3.12
+  entrypoint: npm
+  args: ['install', 'puppeteer']
 - id: test
   name: node:17-alpine3.12
   entrypoint: npm
   args: ['test']
-  waitFor: ['build']
+  waitFor: ['build','install_puppeteer']
 - id: deploy
   name: 'gcr.io/cloud-builders/gsutil'
   args: ['-m','rsync','-r','-d', './dist/site404-js', '${_SERVER_BUCKET_PATH}']
