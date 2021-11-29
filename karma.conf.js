@@ -2,8 +2,8 @@
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
 module.exports = function (config) {
-  process.env.CHROME_BIN = '/usr/bin/chromium'
-  
+  process.env.CHROME_BIN = '/usr/bin/chromium-browser'
+
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
