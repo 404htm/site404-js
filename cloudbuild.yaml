@@ -13,7 +13,7 @@ steps:
   name: node:17-alpine3.12
   entrypoint: bash
   args:
-    - '-c', 
+    - '-c' 
     - |
     apk add firefox 
     npm test
