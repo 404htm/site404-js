@@ -11,7 +11,7 @@ steps:
   - install_dependencies
 - id: test
   name: node:17-alpine3.12
-  entrypoint: bash
+  entrypoint: sh
   args:
     - '-c' 
     - |
