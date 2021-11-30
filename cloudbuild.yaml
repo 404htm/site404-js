@@ -15,6 +15,7 @@ steps:
   args:
     - '-c' 
     - |
+      apk add ttf-freefont
       apk add firefox 
       npm test
       exit 0
