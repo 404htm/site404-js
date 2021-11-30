@@ -9,16 +9,16 @@ steps:
   args: ['run', 'build']
   waitFor:
   - install_dependencies
-- id: install_firefox
-  name: node:17-alpine3.12
-  entrypoint: apk
-  args: ['add', 'firefox']
 - id: test
   name: node:17-alpine3.12
-  entrypoint: npm
-  args: ['test']
+  entrypoint: bash
+  args: [
+    - '-c', 
+    - |
+    apk add firefox 
+    npm test]
   env: ['FIREFOX_BIN=/usr/bin/firefox']
-  waitFor: ['build', 'install_firefox']
+  waitFor: ['build']
 - id: deploy
   name: 'gcr.io/cloud-builders/gsutil'
   args: ['-m','rsync','-r','-d', './dist/site404-js', '${_SERVER_BUCKET_PATH}']

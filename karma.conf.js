@@ -42,5 +42,11 @@ module.exports = function (config) {
     singleRun: false,
     restartOnFileChange: true,
     browsers : ['Firefox', "FirefoxHeadless"],
+    customLaunchers: {'FirefoxHeadless': {
+      base: 'Firefox',
+      flags: [
+        '-headless',
+      ],
+    }}
   });
 };
