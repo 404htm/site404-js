@@ -19,7 +19,7 @@ steps:
       apk add firefox 
       npm test
       exit 0
-  env: ['FIREFOX_BIN=/usr/bin/firefox']
+  env: ['FIREFOX_BIN=/usr/bin/firefox', "CI=true"]
   waitFor: ['build']
 - id: deploy
   name: 'gcr.io/cloud-builders/gsutil'
