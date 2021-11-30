@@ -2,7 +2,7 @@ steps:
 - id: install_dependencies
   name: node:17-alpine3.12
   entrypoint: npm
-  args: ['install']
+  args: ['ci']
 - id: build
   name: node:17-alpine3.12
   entrypoint: npm
@@ -18,7 +18,7 @@ steps:
       apk add ttf-freefont
       apk add firefox 
       CI=true
-      npm install-ci-test
+      ng test -- --watch=false --code-coverage
       exit 0
   env: ['FIREFOX_BIN=/usr/bin/firefox', "CI=true"]
   waitFor: ['build']
