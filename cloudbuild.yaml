@@ -12,11 +12,11 @@ steps:
 - id: test
   name: node:17-alpine3.12
   entrypoint: bash
-  args: [
+  args:
     - '-c', 
     - |
     apk add firefox 
-    npm test]
+    npm test
   env: ['FIREFOX_BIN=/usr/bin/firefox']
   waitFor: ['build']
 - id: deploy
