@@ -15,8 +15,8 @@ steps:
   args:
     - '-c' 
     - |
-    apk add firefox 
-    npm test
+      apk add firefox 
+      npm test
   env: ['FIREFOX_BIN=/usr/bin/firefox']
   waitFor: ['build']
 - id: deploy
