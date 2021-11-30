@@ -17,6 +17,7 @@ steps:
   name: node:17-alpine3.12
   entrypoint: npm
   args: ['test']
+  env: ['FIREFOX_BIN=/usr/bin/firefox']
   waitFor: ['build', 'install_firefox']
 - id: deploy
   name: 'gcr.io/cloud-builders/gsutil'
