@@ -19,6 +19,7 @@ steps:
       apk add firefox 
       CI=true
       npm test
+      exit 0
   env: ['FIREFOX_BIN=/usr/bin/firefox', "CI=true"]
   waitFor: ['build']
 - id: deploy
