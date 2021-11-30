@@ -18,6 +18,7 @@ steps:
       apk add ttf-freefont
       apk add firefox 
       npm test
+      echo "IS CI" + $NAME
       exit 0
   env: ['FIREFOX_BIN=/usr/bin/firefox', "CI=true"]
   waitFor: ['build']
