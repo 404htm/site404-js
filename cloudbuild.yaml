@@ -19,7 +19,6 @@ steps:
       apk add firefox 
       npm link @angular/cli
       ng test --watch=false --code-coverage
-      exit 0
   env: ['FIREFOX_BIN=/usr/bin/firefox', "CI=true"]
   waitFor: ['build']
 - id: deploy
