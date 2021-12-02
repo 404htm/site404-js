@@ -40,7 +40,7 @@ module.exports = function (config) {
     autoWatch: true,
     singleRun: false,
     restartOnFileChange: true,
-    browsers : ["Firefox", "FirefoxHeadless"],
+    browsers : ["FirefoxHeadless"],
     customLaunchers: {'FirefoxHeadless': {
       base: 'Firefox',
       flags: [
