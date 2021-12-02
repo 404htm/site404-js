@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+body
+{
+    background-color: rgb(48, 48, 48);
+    color: white;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    /* rtl:raw:
+    right: 0;
+    */
+    bottom: 0;
+    /* rtl:remove */
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 48px 0 0; /* Height of navbar */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  }
+
+#left-nav
+{
+    background-color: rgb(84, 84, 94)
+}

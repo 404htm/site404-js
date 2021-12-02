@@ -20,6 +20,7 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
+  /*
   it(`should have as title 'site404-js'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
@@ -32,4 +33,5 @@ describe('AppComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.content span')?.textContent).toContain('site404-js app is running!');
   });
+  */
 });
