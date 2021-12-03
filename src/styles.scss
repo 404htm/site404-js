@@ -19,6 +19,16 @@ body
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
   }
 
+.post-preview {
+    color:rgba(104, 104, 104, 0.452);
+      
+}
+
+.img-thumbnail {
+    height: 100px;
+    width: auto;
+}
+
 #left-nav
 {
     background-color: rgb(84, 84, 94)
