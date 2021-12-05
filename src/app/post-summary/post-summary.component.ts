@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'post-summary',
-  templateUrl: './post-summary.component.html',
-  styleUrls: ['./post-summary.component.scss']
+  templateUrl: './post-summary.component.html'
 })
 export class PostSummaryComponent implements OnInit {
 
@@ -11,5 +10,7 @@ export class PostSummaryComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  postTitle = 'Test Post Title'
 
 }
