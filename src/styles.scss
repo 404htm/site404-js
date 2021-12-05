@@ -1,11 +1,18 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
 $highlight-color: rgb(85, 0, 124);
 $border-color: #6c757d;
+
 
 /* You can add global styles to this file, and also import other style files */
 body
 {
     background-color: rgb(10, 10, 10);
     color: rgb(241, 241, 241);
+    background-image: url("./assets/img/temp-bg.jpg");
+    background-position: bottom;
+    background-repeat: repeat-x;
+    background-attachment: fixed;
 }
 
 .sidebar {
@@ -25,10 +32,12 @@ body
 
 post-summary .card {
     color: white;
-    background-color: rgba(17, 17, 17, 0.637);
+    background-color: rgba(17, 17, 17, .75);
     margin-bottom: 3rem;
     margin: 3rem 0 0 0;
     border: 1px solid $border-color;
+
+    backdrop-filter: blur(5px);
 }
 
 .img-thumbnail {
@@ -38,7 +47,7 @@ post-summary .card {
 
 #left-nav
 {
-    background-color: rgb(84, 84, 94)
+    background-color: rgb(25, 25, 31)
 }
 
 footer {
@@ -67,4 +76,7 @@ footer {
     margin: 3px;
     padding: 0px 20px 0px 20px;
     margin-left: 19px;
+
+    font-size: medium;
+    font-weight: normal;
 }
