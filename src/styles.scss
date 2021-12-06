@@ -40,6 +40,11 @@ post-summary .card {
     backdrop-filter: blur(5px);
 }
 
+post-summary .card:hover {
+    filter: brightness(1.5);
+    backdrop-filter: blur(10px) grayscale(1)  drop-shadow(2);
+}
+
 .img-thumbnail {
     height: 100px;
     width: auto;
@@ -62,6 +67,7 @@ footer {
 
 .card-header
 {
+    padding: 0rem 1rem;
     border-bottom: 1px solid $border-color;
 
     background-image: url("./assets/img/texture.png");
@@ -79,4 +85,10 @@ footer {
 
     font-size: medium;
     font-weight: normal;
+}
+
+.card-footer
+{
+    padding: 0rem 1rem;
+    border-top: 1px solid $border-color;
 }
