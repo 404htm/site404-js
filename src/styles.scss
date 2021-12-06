@@ -42,7 +42,7 @@ post-summary .card {
 
 post-summary .card:hover {
     filter: brightness(1.5);
-    backdrop-filter: blur(10px) grayscale(1)  drop-shadow(2);
+    backdrop-filter: blur(10px) drop-shadow(2);
 }
 
 .img-thumbnail {
@@ -70,10 +70,29 @@ footer {
     padding: 0rem 1rem;
     border-bottom: 1px solid $border-color;
 
+
+
+}
+
+
+.section-header-bar
+{
+    height: 2rem;
     background-image: url("./assets/img/texture.png");
     background-repeat: repeat-x;
     background-position: left 50% center;
+    float: left;
+}
 
+.section-title
+{
+    float: left;
+}
+
+
+.section-icons
+{
+    float: right;
 }
 
 .card-header h5
