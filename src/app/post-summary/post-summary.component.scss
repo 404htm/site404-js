@@ -21,17 +21,41 @@
 
 .card-header
 {
-    padding: 0rem 1rem;
+    padding: .1rem;
     border-bottom: 1px solid $border-color;
 }
 
 
 .section-header-bar
 {
-    background-color: red;
-    height: 2rem;
+
     background-image: url("/assets/img/texture.png");
     background-repeat: repeat-x;
     background-position: left 50% center;
-    float: left;
+}
+
+
+.section-title
+{
+}
+
+
+.section-header-bar i
+{
+    float: right;
+}
+
+.card-header h5
+{
+    margin: 3px;
+    //padding: 0px 20px 0px 20px;
+
+    font-size: medium;
+    font-weight: normal;
+}
+
+.card-footer
+{
+    padding: 0rem 1rem;
+    border-top: 1px solid $border-color;
 }
