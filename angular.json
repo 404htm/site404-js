@@ -13,7 +13,7 @@
           "strict": true
         }
       },
-      "root": "",
+      "root": "src",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
@@ -33,7 +33,8 @@
             "styles": [
               "./node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "./node_modules/bootstrap/dist/css/bootstrap.css",
-              "src/styles.scss"
+              "src/assets/styles/main.scss",
+              "src/assets/styles/_variables.scss"
             ],
             "scripts": [
               "./node_modules/bootstrap/dist/js/bootstrap.js"
@@ -101,9 +102,10 @@
             "assets": [
               "src/favicon.ico",
               "src/assets"
+              
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles"
             ],
             "scripts": []
           }
