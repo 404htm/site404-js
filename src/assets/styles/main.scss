@@ -6,10 +6,10 @@ body
 {
     background-color: rgb(10, 10, 10);
     color: rgb(241, 241, 241);
-   // background-image: url("./assets/img/temp-bg.jpg");
+    //background-image: url("./assets/img/temp-bg.jpg");
     background-position: bottom;
     background-repeat: repeat-x;
-    background-attachment: fixed;
+   // background-attachment: fixed;
 }
 
 .sidebar {
@@ -49,31 +49,12 @@ footer {
     border-color: $highlight-color;
 }
 
-
-.section-title
-{
-    float: left;
-}
-
-
-.section-icons
-{
-    float: right;
-}
-
-.card-header h5
-{
-    float: left;
-    margin: 3px;
-    padding: 0px 20px 0px 20px;
-    margin-left: 19px;
-
-    font-size: medium;
-    font-weight: normal;
-}
-
-.card-footer
-{
-    padding: 0rem 1rem;
-    border-top: 1px solid $border-color;
-}
+canvas {
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -9999;
+  }

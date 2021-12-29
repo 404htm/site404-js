@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { PostSummaryComponent } from './post-summary/post-summary.component';
 import { NavTopComponent } from './nav-top/nav-top.component';
 import { NavSideComponent } from './nav-side/nav-side.component';
+import { BackgroundComponent } from './background/background.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { NavSideComponent } from './nav-side/nav-side.component';
     NavTopComponent,
     NavSideComponent,
     PostSummaryComponent,
+    BackgroundComponent
   ],
   imports: [
     BrowserModule,

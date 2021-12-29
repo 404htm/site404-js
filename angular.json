@@ -37,7 +37,8 @@
               "src/assets/styles/_variables.scss"
             ],
             "scripts": [
-              "./node_modules/bootstrap/dist/js/bootstrap.js"
+              "./node_modules/bootstrap/dist/js/bootstrap.js",
+              "./node_modules/three/src/Three.js"
             ]
           },
           "configurations": {
