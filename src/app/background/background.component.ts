@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Data } from '@angular/router';
 import * as THREE from 'three';
-import { MeshBasicMaterial, MeshLambertMaterial, MeshNormalMaterial, MeshPhongMaterial, MeshStandardMaterial, PlaneGeometry } from 'three';
+import { MeshBasicMaterial, MeshLambertMaterial, MeshNormalMaterial, MeshPhongMaterial, MeshPhysicalMaterial, MeshStandardMaterial, PlaneGeometry } from 'three';
 import { randFloat } from 'three/src/math/MathUtils';
 import { NoiseService } from '../service/noise.service';
 
@@ -20,9 +21,11 @@ export class BackgroundComponent implements OnInit {
   ngOnInit(): void {
  
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 100 );
 
-    camera.position.z = 50;
+    camera.position.set(50, 0, 20);
+    camera.rotateX(90* Math.PI/180);
+
 
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
@@ -47,7 +50,7 @@ export class BackgroundComponent implements OnInit {
     scene.add( cube );
     */
     
-    addPlane();
+    //addPlane();
 
     var animate = function () {
       requestAnimationFrame( animate );
@@ -60,6 +63,31 @@ export class BackgroundComponent implements OnInit {
 
     function buildTerrain(data : number[][]) {
         console.log(data);
+        //const geometry = new THREE.PlaneBufferGeometry(200, 200, 200, 200);
+        const material = new MeshStandardMaterial( { color: 0x05aaaaff, wireframe:  false } );
+
+        //const plane = new THREE.Mesh(geometry, material);
+
+        //plane.rotation.x = -80 * Math.PI/180;
+        //plane.position.z = -50;
+
+       // var vertices =  plane.geometry.attributes["position"];
+
+        
+      
+        for (var y = 0; y < 100; y++) {
+          var row = data[y];
+          for (var x = 0; x <100; x++) {
+            const geometry = new THREE.BoxGeometry(1, 1, row[x]/80);
+            const cube = new THREE.Mesh( geometry, material );
+            cube.position.set(x, y, 0);
+            scene.add(cube);
+          }
+        }
+
+        console.log("done");
+      //  console.log(geometry.heigh)
+
     }
 
     function addPlane(){
@@ -69,7 +97,7 @@ export class BackgroundComponent implements OnInit {
       const plane = new THREE.Mesh(geometry, material);
 
       plane.rotation.x = -87 * Math.PI/180;
-      plane.position.z = -50;
+      plane.position.z = -80;
 
       var vertices =  plane.geometry.attributes["position"];
 

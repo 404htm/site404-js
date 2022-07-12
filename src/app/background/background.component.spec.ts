@@ -23,3 +23,4 @@ describe('BackgroundComponent', () => {
     expect(component).toBeTruthy();
   }); */
 });
+
