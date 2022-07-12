@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as THREE from 'three';
 import { MeshBasicMaterial, MeshLambertMaterial, MeshNormalMaterial, MeshPhongMaterial, MeshStandardMaterial, PlaneGeometry } from 'three';
 import { randFloat } from 'three/src/math/MathUtils';
+import { NoiseService } from '../service/noise.service';
 
 @Component({
   selector: 'app-background',
@@ -11,11 +12,13 @@ import { randFloat } from 'three/src/math/MathUtils';
 
 export class BackgroundComponent implements OnInit {
 
-  constructor() { }
+  constructor(private noiseSvc: NoiseService) {
+  }
   
 
 
   ngOnInit(): void {
+ 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
@@ -26,13 +29,16 @@ export class BackgroundComponent implements OnInit {
     document.body.appendChild( renderer.domElement );
 
     const pointLight1 = new THREE.PointLight(0xaaffff);
-    pointLight1.intensity = .5;
+    pointLight1.intensity = 2;
     pointLight1.position.set(200,25,25);
     scene.add(pointLight1);
 
     const pointLight2 = new THREE.PointLight(0xffbbff);
     pointLight2.position.set(-30 ,-30,-30);
     scene.add(pointLight2);
+
+    this.noiseSvc.getSimplex2d()
+      .subscribe(data => buildTerrain(data));
 
     /*
     var geometry = new THREE.TorusGeometry(20, 5, 15, 15);
@@ -52,7 +58,12 @@ export class BackgroundComponent implements OnInit {
       renderer.render( scene, camera );
     };
 
+    function buildTerrain(data : number[][]) {
+        console.log(data);
+    }
+
     function addPlane(){
+      
       const geometry = new THREE.PlaneBufferGeometry(200, 200, 50, 50);
       const material = new MeshStandardMaterial( { color: 0x05aaaaff, wireframe:  false } );
       const plane = new THREE.Mesh(geometry, material);
@@ -87,7 +98,6 @@ export class BackgroundComponent implements OnInit {
     Array(1000).fill(0).forEach(addPoints);
     animate();
   }
-
 
 
 }
