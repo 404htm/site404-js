@@ -21,20 +21,32 @@ export class BackgroundComponent implements OnInit {
   ngOnInit(): void {
 
   var scene = new THREE.Scene();
-  //scene.fog = new THREE.FogExp2( 0xefd1b5, 0.001 );
+  //scene.fog = new THREE.FogExp2( 0xefd1b5, 0.05 );
 
   var renderer = this.setupRenderer();
   var camera = this.setupCamera();
     
-  this.addLights(scene);
+  this.renderAxis(scene);
+  //this.addLights(scene);
 
+
+  this.addLights(scene);
     
 
   this.noiseSvc.getSimplex2d()
-    .subscribe(data => this.renderTerrain(data, scene));
+    .subscribe(data => {
+      this.renderTerrain(data, scene);
+      //const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 2);
+      //scene.add( light );
+      //renderer.render( scene, camera );
+    });
+      
 
 
-  this.renderAxis(scene);
+
+
+  renderer.render( scene, camera );
+
  // this.renderTerrain();
 
   var animate = function () {
@@ -45,6 +57,8 @@ export class BackgroundComponent implements OnInit {
 
       renderer.render( scene, camera );
     };
+
+    animate();
 
     function buildTerrain(data : number[][]) {
         console.log(data);
@@ -80,7 +94,7 @@ export class BackgroundComponent implements OnInit {
     function addPlane(data : number[][]){
       
       const geometry = new THREE.PlaneBufferGeometry(200, 200, 50, 50);
-      const material = new MeshStandardMaterial( { color: 0x05aaaaff, wireframe:  false } );
+      const material = new MeshLambertMaterial( { color: 0x05aaaaff, wireframe:  false } );
       const plane = new THREE.Mesh(geometry, material);
 
       plane.rotation.x = -87 * Math.PI/180;
@@ -123,65 +137,78 @@ export class BackgroundComponent implements OnInit {
 
   private setupCamera() : THREE.Camera{
     const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
-    camera.position.set( 100, -80, 150 );
+    camera.position.set( 100, -10, 50 );
     camera.lookAt( 100, 100, 0 );
     return camera;
   }
 
   private addLights(scene: Scene) {
-    const light = new THREE.HemisphereLight();
-		scene.add( light );
+    console.log("Adding Lights");
+    const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, .1);
+    scene.add( light );
 
+    /*
     const pointLight1 = new THREE.PointLight(0xaaffff);
-    pointLight1.intensity = 2;
-    pointLight1.position.set(200,25,25);
-    //scene.add(pointLight1);
+    pointLight1.position.set(100,25,300);
+    scene.add(pointLight1);
 
     const pointLight2 = new THREE.PointLight(0xffbbff);
-    pointLight2.position.set(-30 ,-80,-30);
-    //scene.add(pointLight2);
+    pointLight2.position.set(100, 100, 300);
+    scene.add(pointLight2);
+    */
   }
 
   private renderTerrain(data : number[][], scene: Scene) {
     const geometry = new THREE.BufferGeometry();
-    const material = new THREE.MeshStandardMaterial( { color: 0xff0000 } );
+    const material = new THREE.MeshBasicMaterial();
 
     // create a simple square shape. We duplicate the top left and bottom right
     // vertices because each vertex needs to appear once per triangle.
 
-    const points = [];
+    const points: number[] = [];
+    function push(vector: THREE.Vector3) {
+      points.push(vector.x);
+      points.push(vector.y);
+      points.push(vector.z/div);
+    }
    
     for (var y = 0; y < 200; y++) {
-      var row = data[y];
-      var rowNext = data[y+1];
-
       for (var x = 0; x <200; x++) {
-        var div = 50;
+        var div = 100;
+          var ul = new THREE.Vector3(x, y, data[y][x]);
+          var ur = new THREE.Vector3(x+1, y, data[y][x+1]);
+          var ll = new THREE.Vector3(x, y+1, data[y+1][x]);
+          var lr = new THREE.Vector3(x+1, y+1, data[y+1][x+1]);
+          var c = new THREE.Vector3(x+1, y+1, data[y+1][x+1]);
+          
+          push(ul);
+          push(ur);
+          push(ll);
 
-        var z = row[x]/div;
+          push(ur);
+          push(lr);
+          push(ll);
 
-        try {
-          points.push(x),
-          points.push(y),
-          points.push(z),
+          /*
+          push(ul);
+          push(ll);
+          push(c);
+          
+          push(ll);
+          push(lr);
+          push(c);
 
-          points.push(x+1),
-          points.push(y),
-          points.push(row[x+1]/div),
+          push(lr);
+          push(ur);
+          push(c);
+          */
 
-          points.push(x + .5),
-          points.push(y + .5),
-          points.push(row[x+1]/div)
-
-        }
-        catch (Exception) {
-          console.log("x: "+x+",y: "+y+"z: "+ row[x]/50)
-        }
       }
     }
 
     // itemSize = 3 because there are 3 values (components) per vertex
     geometry.setAttribute( 'position', new THREE.BufferAttribute(new Float32Array(points), 3 ));
+    geometry.computeVertexNormals();
 
     const mesh = new THREE.Mesh( geometry, material )
     
