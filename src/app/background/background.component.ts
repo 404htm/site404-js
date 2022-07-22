@@ -21,7 +21,7 @@ export class BackgroundComponent implements OnInit {
   ngOnInit(): void {
 
   var scene = new THREE.Scene();
-  //scene.fog = new THREE.FogExp2( 0xefd1b5, 0.05 );
+  //scene.fog = new THREE.FogExp2( 0xcccccc, 0.07 );
 
   var renderer = this.setupRenderer();
   var camera = this.setupCamera();
@@ -136,15 +136,15 @@ export class BackgroundComponent implements OnInit {
   }
 
   private setupCamera() : THREE.Camera{
-    const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
-    camera.position.set( 100, -10, 50 );
+    const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 200 );
+    camera.position.set( 100, -10, 40 );
     camera.lookAt( 100, 100, 0 );
     return camera;
   }
 
   private addLights(scene: Scene) {
     console.log("Adding Lights");
-    const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, .1);
+    const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, .5);
     scene.add( light );
 
     /*
@@ -160,12 +160,13 @@ export class BackgroundComponent implements OnInit {
 
   private renderTerrain(data : number[][], scene: Scene) {
     const geometry = new THREE.BufferGeometry();
-    const material = new THREE.MeshBasicMaterial();
+    const material = new THREE.MeshLambertMaterial({color: 0xcccccc, wireframe: true});
 
     // create a simple square shape. We duplicate the top left and bottom right
     // vertices because each vertex needs to appear once per triangle.
-
+    let div = 100;
     const points: number[] = [];
+
     function push(vector: THREE.Vector3) {
       points.push(vector.x);
       points.push(vector.y);
@@ -174,7 +175,6 @@ export class BackgroundComponent implements OnInit {
    
     for (var y = 0; y < 200; y++) {
       for (var x = 0; x <200; x++) {
-        var div = 100;
           var ul = new THREE.Vector3(x, y, data[y][x]);
           var ur = new THREE.Vector3(x+1, y, data[y][x+1]);
           var ll = new THREE.Vector3(x, y+1, data[y+1][x]);
