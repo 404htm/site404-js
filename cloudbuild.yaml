@@ -9,19 +9,6 @@ steps:
   args: ['run', 'build']
   waitFor:
   - install_dependencies
-- id: test
-  name: node:17-alpine3.12
-  entrypoint: sh
-  args:
-    - '-c' 
-    - |
-      apk add ttf-freefont
-      apk add firefox 
-      npm link @angular/cli
-      ng test --watch=false --code-coverage
-      exit 0
-  env: ['FIREFOX_BIN=/usr/bin/firefox', "CI=true"]
-  waitFor: ['build']
 - id: deploy
   name: 'gcr.io/cloud-builders/gsutil'
   args: ['-m','rsync','-r','-d', './dist/site404-js', '${_SERVER_BUCKET_PATH}']
