@@ -34,10 +34,7 @@ body
     width: auto;
 }
 
-#left-nav
-{
-    background-color: rgb(25, 25, 31)
-}
+
 
 footer {
     color: $highlight-color;
@@ -58,3 +55,19 @@ canvas {
     left: 0;
     z-index: -9999;
   }
+
+.highlight1 {
+      color: $highlight1;
+}
+
+.highlight2 {
+    color: $highlight2;
+}
+
+.highlight3 {
+    color: $highlight3;
+}
+
+.highlight4 {
+    color: $highlight4;
+}

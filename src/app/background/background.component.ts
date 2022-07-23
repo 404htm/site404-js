@@ -21,7 +21,7 @@ export class BackgroundComponent implements OnInit {
   ngOnInit(): void {
 
   var scene = new THREE.Scene();
-  //scene.fog = new THREE.FogExp2( 0xcccccc, 0.07 );
+  scene.fog = new THREE.FogExp2( 0x000000, 0.007);
 
   var renderer = this.setupRenderer();
   var camera = this.setupCamera();
