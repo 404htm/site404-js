@@ -9,9 +9,34 @@
     color: white;
 }
 
+.nav-link {
+    padding-bottom: 0px;
+}
+
+.material-icons { display: inline-flex; vertical-align: text-bottom; }
+
 .icon
 {
-    width: 35px;
-    font-size: 24px;
-    line-height: unset;
+    width: 25px;
+    font-size: 20px;
+}
+
+.expand
+{
+    color: rgb(179, 179, 179);
+}
+
+ul ul {
+    list-style: none;
+    margin-left: 25px;
+    margin-bottom: 10px;
+
+}
+
+ul.open {
+    border-left: 1px solid rgb(88, 88, 88);
+}
+
+li span, .material-icons {
+    line-height: 20px;
 }
