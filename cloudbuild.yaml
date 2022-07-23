@@ -12,7 +12,7 @@ steps:
 - id: deploy
   name: 'gcr.io/cloud-builders/gsutil'
   args: ['-m','rsync','-r','-d', './dist/site404-js', '${_SERVER_BUCKET_PATH}']
-  waitFor: ['test']
+  waitFor: ['build']
 - id: invalidate_cache
   name: 'gcr.io/cloud-builders/gcloud'
   args: ['compute','url-maps','invalidate-cdn-cache', '${_LOAD_BALANCER_NAME}', '--path=/*']
