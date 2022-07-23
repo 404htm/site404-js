@@ -13,126 +13,47 @@ import { NoiseService } from '../service/noise.service';
 
 export class BackgroundComponent implements OnInit {
 
-  constructor(private noiseSvc: NoiseService) {
+  _renderer !: THREE.WebGLRenderer;
+  _scene !: THREE.Scene;
+  _camera !: THREE.Camera;
+
+  constructor(private noiseSvc: NoiseService) 
+  {
   }
   
+  ngOnInit(): void
+  {
+    this._renderer = new THREE.WebGLRenderer();
+    document.body.appendChild(this._renderer.domElement);
+    this.onResize(null);
+
+    this._scene =   new THREE.Scene();
+    this._scene.fog = new THREE.FogExp2( 0x000000, 0.007);
+    this._camera = this.setupCamera();
 
 
-  ngOnInit(): void {
-
-  var scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2( 0x000000, 0.007);
-
-  var renderer = this.setupRenderer();
-  var camera = this.setupCamera();
-    
-  this.renderAxis(scene);
-  //this.addLights(scene);
-
-
-  this.addLights(scene);
+    this.renderAxis(this._scene);
+    this.addLights(this._scene);
     
 
-  this.noiseSvc.getSimplex2d()
-    .subscribe(data => {
-      this.renderTerrain(data, scene);
-      //const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 2);
-      //scene.add( light );
-      //renderer.render( scene, camera );
-    });
+  this.noiseSvc.getSimplex2d() 
+    .subscribe(data => this.renderTerrain(data));
       
-
-
-
-
-  renderer.render( scene, camera );
-
- // this.renderTerrain();
-
-  var animate = function () {
-      requestAnimationFrame( animate );
-
-      //pointLight1.position.x += -0.2;
-      //pointLight1.position.y += -0.2;
-
-      renderer.render( scene, camera );
-    };
-
-    animate();
-
-    function buildTerrain(data : number[][]) {
-        console.log(data);
-        //const geometry = new THREE.PlaneBufferGeometry(200, 200, 200, 200);
-       
-
-        //const plane = new THREE.Mesh(geometry, material);
-
-        //plane.rotation.x = -80 * Math.PI/180;
-        //plane.position.z = -50;
-
-       // var vertices =  plane.geometry.attributes["position"];
-       const material = new MeshBasicMaterial( { color: 0xffffff, wireframe:  false } );
-        
-        for (var y = 0; y < 200; y++) {
-          var row = data[y];
-          for (var x = 0; x <200; x++) {
-            try {
-              //console.log("x: "+x+",y: "+y+"z: "+ row[x]/50)
-              const geometry = new THREE.BoxGeometry(1, 1, row[x]/50);
-              const cube = new THREE.Mesh( geometry, material );
-              cube.position.set(x, y, 0);
-              scene.add(cube);
-            }
-            catch (Exception) {
-              console.log("x: "+x+",y: "+y+"z: "+ row[x]/50)
-            }
-
-          }
-        }
-    }
-
-    function addPlane(data : number[][]){
-      
-      const geometry = new THREE.PlaneBufferGeometry(200, 200, 50, 50);
-      const material = new MeshLambertMaterial( { color: 0x05aaaaff, wireframe:  false } );
-      const plane = new THREE.Mesh(geometry, material);
-
-      plane.rotation.x = -87 * Math.PI/180;
-     // plane.position.z = -80;
-
-      var vertices =  plane.geometry.attributes["position"];
-
-      for (var i = 0; i<= 10000; i+= 1)
-      {
-        vertices.setZ(i,200);
-      };
-      //console.log(vertices);
-
-      vertices.needsUpdate = true;
-      geometry.computeVertexNormals();
-      scene.add(plane);
-    }
-
-
-    function addPoints(){
-      const geometry = new THREE.SphereGeometry(.01, 1, 1);
-      const material = new THREE.MeshBasicMaterial();
-      const point = new THREE.Mesh(geometry, material);
-      const [x, y, z] = Array(3).fill(0).map(() => THREE.MathUtils.randFloatSpread(100));
-
-      point.position.set(x, y, z);
-      scene.add(point);
-    }
-
-    Array(100).fill(0).forEach(addPoints);
-    animate();
+    this.animate();
+    this._renderer.render( this._scene, this._camera );
   }
 
-  private setupRenderer(){
-    var renderer = new THREE.WebGLRenderer();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-    document.body.appendChild( renderer.domElement );
-    return renderer;
+  onResize(event:any) {
+    this._renderer.setSize( window.innerWidth, window.innerHeight);
+  }
+
+  animate() {
+    //var ref = this;
+    //requestAnimationFrame(ref.animate);
+
+    //pointLight1.position.x += -0.2;
+    //pointLight1.position.y += -0.2;
+    this._renderer.render(  this._scene,  this._camera );
   }
 
   private setupCamera() : THREE.Camera{
@@ -158,7 +79,7 @@ export class BackgroundComponent implements OnInit {
     */
   }
 
-  private renderTerrain(data : number[][], scene: Scene) {
+  private renderTerrain(data : number[][]) {
     const geometry = new THREE.BufferGeometry();
     const material = new THREE.MeshLambertMaterial({color: 0xcccccc, wireframe: true});
 
@@ -212,7 +133,8 @@ export class BackgroundComponent implements OnInit {
 
     const mesh = new THREE.Mesh( geometry, material )
     
-    scene.add(mesh);
+    this._scene.add(mesh);
+    this._renderer.render(  this._scene,  this._camera );
   }
 
   private renderAxis(scene: Scene) {
