@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Data } from '@angular/router';
 import * as THREE from 'three';
 import { Color, MeshBasicMaterial, MeshLambertMaterial, MeshNormalMaterial, MeshPhongMaterial, MeshPhysicalMaterial, MeshStandardMaterial, PlaneGeometry, Scene } from 'three';
@@ -25,7 +25,8 @@ export class BackgroundComponent implements OnInit {
   {
     this._renderer = new THREE.WebGLRenderer();
     document.body.appendChild(this._renderer.domElement);
-    this.onResize(null);
+    this.onResize();
+    window.onresize = () => this.onResize();
 
     this._scene =   new THREE.Scene();
     this._scene.fog = new THREE.FogExp2( 0x000000, 0.007);
@@ -43,7 +44,10 @@ export class BackgroundComponent implements OnInit {
     this._renderer.render( this._scene, this._camera );
   }
 
-  onResize(event:any) {
+  @HostListener('window:resize', ['$event'])
+  onResize(event?:any) {
+    console.log("resizing...");
+    console.log(this._renderer.domElement);
     this._renderer.setSize( window.innerWidth, window.innerHeight);
   }
 
@@ -109,21 +113,6 @@ export class BackgroundComponent implements OnInit {
           push(ur);
           push(lr);
           push(ll);
-
-          /*
-          push(ul);
-          push(ll);
-          push(c);
-          
-          push(ll);
-          push(lr);
-          push(c);
-
-          push(lr);
-          push(ur);
-          push(c);
-          */
-
       }
     }
 
