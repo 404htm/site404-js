@@ -49,7 +49,7 @@ export class BackgroundComponent implements OnInit {
 
   animate() {
     //var ref = this;
-    //requestAnimationFrame(ref.animate);
+    requestAnimationFrame(() => this.animate());
 
     //pointLight1.position.x += -0.2;
     //pointLight1.position.y += -0.2;

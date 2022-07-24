@@ -18,7 +18,7 @@
 .icon
 {
     width: 25px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .expand
@@ -30,7 +30,7 @@ ul ul {
     list-style: none;
     margin-left: 25px;
     margin-bottom: 10px;
-
+    padding-left: 25px;
 }
 
 ul.open {
@@ -39,4 +39,20 @@ ul.open {
 
 li span, .material-icons {
     line-height: 20px;
+}
+
+.icon-general { 
+    color: rgb(4, 204, 121); 
+}
+
+.icon-dotnet { 
+    color: rgb(103, 55, 194); 
+}
+
+.icon-webdev {
+    color: rgb(204, 84, 4)
+}
+
+.icon-algorithm {
+    color: rgb(4, 124, 204)
 }
