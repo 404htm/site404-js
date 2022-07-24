@@ -1,7 +1,12 @@
 #left-nav 
 {
     height: 100%;
-    background-color: rgba(25, 25, 31, .9)
+    background-color: rgba(25, 25, 31, .9);
+ 
+}
+
+#left-nav * {
+    font-size: 16px;
 }
 
 #left-nav , #left-nav a
@@ -18,7 +23,6 @@
 .icon
 {
     width: 25px;
-    font-size: 18px;
 }
 
 .expand
