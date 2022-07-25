@@ -16,6 +16,8 @@ export class BackgroundComponent implements OnInit {
   _renderer !: THREE.WebGLRenderer;
   _scene !: THREE.Scene;
   _camera !: THREE.Camera;
+  _pointLight1 = new THREE.PointLight(0x42f5bc);
+  _pointLight2 = new THREE.PointLight(0x42f5bc);
 
   constructor(private noiseSvc: NoiseService) 
   {
@@ -32,6 +34,14 @@ export class BackgroundComponent implements OnInit {
     this._scene.fog = new THREE.FogExp2( 0x000000, 0.007);
     this._camera = this.setupCamera();
 
+    this._pointLight1.position.set(0, 0, 0);
+    this._pointLight1.intensity=.3;
+    this._scene.add(this._pointLight1);
+    
+    this._pointLight2.position.set(-100,100,150);
+    this._pointLight2.intensity=.3;
+    this._scene.add(this._pointLight2);
+
 
     this.renderAxis(this._scene);
     this.addLights(this._scene);
@@ -40,8 +50,8 @@ export class BackgroundComponent implements OnInit {
   this.noiseSvc.getSimplex2d() 
     .subscribe(data => this.renderTerrain(data));
       
-    this.animate();
     this._renderer.render( this._scene, this._camera );
+    this.animate();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -55,8 +65,8 @@ export class BackgroundComponent implements OnInit {
     //var ref = this;
     requestAnimationFrame(() => this.animate());
 
-    //pointLight1.position.x += -0.2;
-    //pointLight1.position.y += -0.2;
+    this._pointLight1.position.x += -1;
+    this._pointLight2.position.x += 1;
     this._renderer.render(  this._scene,  this._camera );
   }
 
@@ -124,6 +134,10 @@ export class BackgroundComponent implements OnInit {
     
     this._scene.add(mesh);
     this._renderer.render(  this._scene,  this._camera );
+  }
+
+  private renderSceneBase() {
+
   }
 
   private renderAxis(scene: Scene) {
