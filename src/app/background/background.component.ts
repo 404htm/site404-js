@@ -13,11 +13,15 @@ import { NoiseService } from '../service/noise.service';
 
 export class BackgroundComponent implements OnInit {
 
+  _widthX: number = 200;
+  _widthY: number = 200;
+
   _renderer !: THREE.WebGLRenderer;
   _scene !: THREE.Scene;
   _camera !: THREE.Camera;
   _pointLight1 = new THREE.PointLight(0x42f5bc);
   _pointLight2 = new THREE.PointLight(0x42f5bc);
+
 
   constructor(private noiseSvc: NoiseService) 
   {
@@ -71,31 +75,21 @@ export class BackgroundComponent implements OnInit {
   }
 
   private setupCamera() : THREE.Camera{
-    const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 200 );
-    camera.position.set( 100, -10, 40 );
-    camera.lookAt( 100, 100, 0 );
+    const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, this._widthY );
+    camera.position.set(this._widthX/2, -10, 40 );
+    camera.lookAt(this._widthX/2,this._widthY/2, 0 );
     return camera;
   }
 
   private addLights(scene: Scene) {
     console.log("Adding Lights");
-    const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, .5);
+    const light = new THREE.HemisphereLight( 0xffaaaa,  0xffaaaa, .5);
     scene.add( light );
-
-    /*
-    const pointLight1 = new THREE.PointLight(0xaaffff);
-    pointLight1.position.set(100,25,300);
-    scene.add(pointLight1);
-
-    const pointLight2 = new THREE.PointLight(0xffbbff);
-    pointLight2.position.set(100, 100, 300);
-    scene.add(pointLight2);
-    */
   }
 
   private renderTerrain(data : number[][]) {
     const geometry = new THREE.BufferGeometry();
-    const material = new THREE.MeshLambertMaterial({color: 0xcccccc, wireframe: true});
+    const material = new THREE.MeshPhongMaterial({color: 0x000000, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1});
 
     // create a simple square shape. We duplicate the top left and bottom right
     // vertices because each vertex needs to appear once per triangle.
@@ -108,8 +102,8 @@ export class BackgroundComponent implements OnInit {
       points.push(vector.z/div);
     }
    
-    for (var y = 0; y < 200; y++) {
-      for (var x = 0; x <200; x++) {
+    for (var y = 0; y < this._widthY -1; y++) {
+      for (var x = 0; x <this._widthX -1; x++) {
           var ul = new THREE.Vector3(x, y, data[y][x]);
           var ur = new THREE.Vector3(x+1, y, data[y][x+1]);
           var ll = new THREE.Vector3(x, y+1, data[y+1][x]);
@@ -126,19 +120,23 @@ export class BackgroundComponent implements OnInit {
       }
     }
 
-    // itemSize = 3 because there are 3 values (components) per vertex
     geometry.setAttribute( 'position', new THREE.BufferAttribute(new Float32Array(points), 3 ));
     geometry.computeVertexNormals();
-
     const mesh = new THREE.Mesh( geometry, material )
-    
+
+    var edges = new THREE.WireframeGeometry( mesh.geometry ); // or WireframeGeometry
+    var lineMat = new THREE.LineBasicMaterial( { color: 0x334040} );
+    var wireframe = new THREE.LineSegments(edges, lineMat);
+  
     this._scene.add(mesh);
+    this._scene.add(wireframe);
+
     this._renderer.render(  this._scene,  this._camera );
   }
 
-  private renderSceneBase() {
+    private renderSceneBase() {
 
-  }
+    }
 
   private renderAxis(scene: Scene) {
     RenderLine(0xff0000, [new THREE.Vector3( -1000, 0, 0 ) ,new THREE.Vector3( 1000, 0, 0 )]); //X - Red
@@ -151,7 +149,7 @@ export class BackgroundComponent implements OnInit {
       const line = new THREE.Line( geometry, material )
       scene.add( line );
     }
-  }
+  } 
 
 
 }
