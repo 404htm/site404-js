@@ -13,14 +13,15 @@ import { NoiseService } from '../service/noise.service';
 
 export class BackgroundComponent implements OnInit {
 
-  _widthX: number = 256;
-  _widthY: number = 256;
+  _widthX: number = 257;
+  _widthY: number = 513;
 
   _renderer !: THREE.WebGLRenderer;
   _scene !: THREE.Scene;
   _camera !: THREE.Camera;
   _pointLight1 = new THREE.PointLight(0x42f5bc);
   _pointLight2 = new THREE.PointLight(0x42f5bc);
+  _fog = new THREE.FogExp2( 0x000000, .05);
 
 
   constructor(private noiseSvc: NoiseService) 
@@ -35,11 +36,11 @@ export class BackgroundComponent implements OnInit {
     window.onresize = () => this.onResize();
 
     this._scene =   new THREE.Scene();
-    this._scene.fog = new THREE.FogExp2( 0x000000, 0.007);
+    this._scene.fog = this._fog;
     this._camera = this.setupCamera();
 
     this._pointLight1.position.set(0, 0, 0);
-    this._pointLight1.intensity=.3;
+    this._pointLight1.intensity=.01;
     this._scene.add(this._pointLight1);
     
     this._pointLight2.position.set(-100,100,150);
@@ -47,7 +48,7 @@ export class BackgroundComponent implements OnInit {
     this._scene.add(this._pointLight2);
 
 
-    this.renderAxis(this._scene);
+    //this.renderAxis(this._scene);
     this.addLights(this._scene);
     
 
@@ -71,6 +72,9 @@ export class BackgroundComponent implements OnInit {
 
     this._pointLight1.position.x += -1;
     this._pointLight2.position.x += 1;
+
+    if(this._fog.density > .007) this._fog.density -= .0001;
+
     this._renderer.render(  this._scene,  this._camera );
   }
 
@@ -125,7 +129,7 @@ export class BackgroundComponent implements OnInit {
     const mesh = new THREE.Mesh( geometry, material )
 
     var edges = new THREE.WireframeGeometry( mesh.geometry ); // or WireframeGeometry
-    var lineMat = new THREE.LineBasicMaterial( { color: 0x3e444f} );
+    var lineMat = new THREE.LineBasicMaterial( { color: 0x78808f} );
     var wireframe = new THREE.LineSegments(edges, lineMat);
   
     this._scene.add(mesh);
