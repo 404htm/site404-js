@@ -7,9 +7,12 @@ export class NoiseService {
   apiURL = 'http://localhost:49154';
   constructor(private http: HttpClient) {}
 
-  getSimplex2d(): Observable<number[][]> {
+  getSimplex2d(width: number, height: number): Observable<number[][]> {
     return this.http
-      .get<number[][]>(this.apiURL + '/Noise/')
+      .get<number[][]>(this.apiURL + '/Noise/',  { params: {
+          width: width, 
+          height: height
+        }})
       .pipe(retry(1));
   }
 

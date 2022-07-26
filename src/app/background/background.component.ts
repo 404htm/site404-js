@@ -13,8 +13,8 @@ import { NoiseService } from '../service/noise.service';
 
 export class BackgroundComponent implements OnInit {
 
-  _widthX: number = 200;
-  _widthY: number = 200;
+  _widthX: number = 256;
+  _widthY: number = 256;
 
   _renderer !: THREE.WebGLRenderer;
   _scene !: THREE.Scene;
@@ -51,7 +51,7 @@ export class BackgroundComponent implements OnInit {
     this.addLights(this._scene);
     
 
-  this.noiseSvc.getSimplex2d() 
+  this.noiseSvc.getSimplex2d(this._widthX, this._widthY) 
     .subscribe(data => this.renderTerrain(data));
       
     this._renderer.render( this._scene, this._camera );
@@ -93,7 +93,7 @@ export class BackgroundComponent implements OnInit {
 
     // create a simple square shape. We duplicate the top left and bottom right
     // vertices because each vertex needs to appear once per triangle.
-    let div = 100;
+    let div = 75;
     const points: number[] = [];
 
     function push(vector: THREE.Vector3) {
@@ -125,7 +125,7 @@ export class BackgroundComponent implements OnInit {
     const mesh = new THREE.Mesh( geometry, material )
 
     var edges = new THREE.WireframeGeometry( mesh.geometry ); // or WireframeGeometry
-    var lineMat = new THREE.LineBasicMaterial( { color: 0x334040} );
+    var lineMat = new THREE.LineBasicMaterial( { color: 0x3e444f} );
     var wireframe = new THREE.LineSegments(edges, lineMat);
   
     this._scene.add(mesh);
