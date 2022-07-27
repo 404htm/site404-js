@@ -52,7 +52,7 @@ export class BackgroundComponent implements OnInit {
     this.addLights(this._scene);
     
 
-  this.noiseSvc.getSimplex2d(this._widthX, this._widthY) 
+  this.noiseSvc.getSimplex2dRepeating(this._widthX, this._widthY) 
     .subscribe(data => this.renderTerrain(data));
       
     this._renderer.render( this._scene, this._camera );
@@ -80,7 +80,7 @@ export class BackgroundComponent implements OnInit {
 
   private setupCamera() : THREE.Camera{
     const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, this._widthY );
-    camera.position.set(this._widthX/2, -10, 40 );
+    camera.position.set(this._widthX/2, -10, 30 );
     camera.lookAt(this._widthX/2,this._widthY/2, 0 );
     return camera;
   }

@@ -16,6 +16,17 @@ export class NoiseService {
       .pipe(retry(1));
   }
 
+  getSimplex2dRepeating(width: number, height: number): Observable<number[][]> {
+    return this.http
+      .get<number[][]>(this.apiURL + '/noise/repeating',  { params: {
+          width: width, 
+          height: height
+        }})
+      .pipe(retry(1));
+  }
+
+  
+
   catchError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
