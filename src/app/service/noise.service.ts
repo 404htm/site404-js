@@ -4,7 +4,7 @@ import { Observable, retry, throwError } from 'rxjs';
 
 @Injectable()
 export class NoiseService {
-  apiURL = 'http://localhost:49154';
+  apiURL = 'http://localhost:49153';
   constructor(private http: HttpClient) {}
 
   getSimplex2d(width: number, height: number): Observable<number[][]> {

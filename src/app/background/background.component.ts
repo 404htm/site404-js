@@ -21,7 +21,7 @@ export class BackgroundComponent implements OnInit {
   _camera !: THREE.Camera;
   _pointLight1 = new THREE.PointLight(0x42f5bc);
   _pointLight2 = new THREE.PointLight(0x42f5bc);
-  _fog = new THREE.FogExp2( 0x000000, .05);
+  _fog = new THREE.FogExp2( 0x000000, .04);
 
 
   constructor(private noiseSvc: NoiseService) 
@@ -56,7 +56,7 @@ export class BackgroundComponent implements OnInit {
     .subscribe(data => this.renderTerrain(data));
       
     this._renderer.render( this._scene, this._camera );
-    this.animate();
+    
   }
 
   @HostListener('window:resize', ['$event'])
@@ -80,7 +80,7 @@ export class BackgroundComponent implements OnInit {
 
   private setupCamera() : THREE.Camera{
     const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, this._widthY );
-    camera.position.set(this._widthX/2, -10, 30 );
+    camera.position.set(this._widthX/2, -10, 20 );
     camera.lookAt(this._widthX/2,this._widthY/2, 0 );
     return camera;
   }
@@ -93,7 +93,7 @@ export class BackgroundComponent implements OnInit {
 
   private renderTerrain(data : number[][]) {
     const geometry = new THREE.BufferGeometry();
-    const material = new THREE.MeshPhongMaterial({color: 0x000000, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1});
+    const material = new THREE.MeshPhongMaterial({color: 0x000005, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1});
 
     // create a simple square shape. We duplicate the top left and bottom right
     // vertices because each vertex needs to appear once per triangle.
@@ -129,13 +129,13 @@ export class BackgroundComponent implements OnInit {
     const mesh = new THREE.Mesh( geometry, material )
 
     var edges = new THREE.WireframeGeometry( mesh.geometry ); // or WireframeGeometry
-    var lineMat = new THREE.LineBasicMaterial( { color: 0x78808f} );
+    var lineMat = new THREE.LineBasicMaterial( { color: 0x616580} );
     var wireframe = new THREE.LineSegments(edges, lineMat);
   
     this._scene.add(mesh);
     this._scene.add(wireframe);
 
-    this._renderer.render(  this._scene,  this._camera );
+    this.animate();
   }
 
     private renderSceneBase() {
