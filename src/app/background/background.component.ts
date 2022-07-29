@@ -129,11 +129,12 @@ export class BackgroundComponent implements OnInit {
     const mesh = new THREE.Mesh( geometry, material )
 
     var edges = new THREE.WireframeGeometry( mesh.geometry ); // or WireframeGeometry
-    var lineMat = new THREE.LineBasicMaterial( { color: 0x616580} );
+    var lineMat = new THREE.LineBasicMaterial( { color: 0x706f65} );
     var wireframe = new THREE.LineSegments(edges, lineMat);
   
     this._scene.add(mesh);
     this._scene.add(wireframe);
+    
 
     this.animate();
   }
